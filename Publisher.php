@@ -36,7 +36,7 @@ do {
             $loop = Factory::create();
             $connector = new Connector($loop);
 
-            $connector->connect($_ENV['SERVER_URL'])
+            $connector->connect($_ENV['SOCKET_HOST'] . ':' . $_ENV['SOCKET_PORT'])
                 ->then(function (ConnectionInterface $conn) use ($loop, $data) {
                     echo " [x] Sent $data" . PHP_EOL;
                     $conn->write($data);

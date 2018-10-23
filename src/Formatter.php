@@ -2,8 +2,18 @@
 
 namespace App;
 
+/**
+ * Class Formatter
+ * Класс для форматирования данных
+ */
 class Formatter
 {
+    /**
+     * Метод, выполняющий сериализацию, сжатие и кодироваие
+     * входного массива для передачи по каналу
+     * @param array $arrayData
+     * @return string
+     */
     public static function convertData(array $arrayData): string {
         $serializedData = serialize($arrayData);
 
@@ -13,15 +23,5 @@ class Formatter
         $serializedData = serialize(['data' => $compressedData, 'length' => $dataLength]);
 
         return base64_encode($serializedData);
-    }
-
-    public static function revertConvertedData(string $convertedData): array {
-        $serializedData = base64_decode($convertedData);
-
-        $message = unserialize($serializedData);
-
-        $uncompressedData = gzdecode($message['data'], $message['length']);
-
-        return unserialize($uncompressedData);
     }
 }
